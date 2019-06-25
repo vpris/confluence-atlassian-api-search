@@ -56,7 +56,12 @@ if ($err) {
     $object = json_decode($response, true);
 }
 
-$results = array_filter($object['results']);
+if(is_array($object['results'])) {
+    $results = array_filter($object['results']);
+} else {
+    $results = array();
+}
+
 if(!empty($results)) {
     foreach ($results as $result) {
         $urlss = "{$conflUrl}{$result['_links']['webui']}";
@@ -77,5 +82,5 @@ if(!empty($results)) {
         print "</div>";
     }
 } else {
-    print "<div class='notFound'>Not found! Try changing the query. You can search for an incomplete word.</div>";
+    print "<div class='notFound'>Ошибка! Попробуйте изменить запрос. Допускается поиск неполного слова.</div>";
 }
